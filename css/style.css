@@ -1,0 +1,226 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+/* Start Global Rules */
+:root {
+  --Very-Light-Gray: hsl(0, 0%, 98%);
+  --Very-Light-Grayish-Blue: hsl(236, 33%, 92%);
+  --Light-Grayish-Blue: hsl(233, 11%, 84%);
+  --Dark-Grayish-Blue: hsl(236, 9%, 61%);
+  --Very-Dark-Grayish-Blue: hsl(235, 19%, 35%);
+  --Very-Dark-Blue: hsl(235, 21%, 11%);
+  --Very-Dark-Blue: hsl(235, 24%, 19%);
+  --Light-Grayish-Blue: hsl(234, 39%, 85%);
+  --Light-Grayish-Blue: hsl(236, 33%, 92%);
+  --Dark-Grayish-Blue: hsl(234, 11%, 52%);
+  --Very-Dark-Grayish-Blue: hsl(233, 14%, 35%);
+  --Very-Dark-Grayish-Blue: hsl(237, 14%, 26%);
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+form input:focus {
+  outline: none;
+}
+a {
+  text-decoration: none;
+}
+.d-none {
+  display: none;
+}
+/* End Global Rules */
+
+/* Start Header */
+header {
+  background-image: url(../img/bg-desktop-dark.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 25vh;
+}
+header .container-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-top: 40px;
+  width: 70%;
+  margin: 0 auto;
+}
+header .container-header #light {
+  width: 26px;
+  height: 26px;
+  user-select: none;
+}
+#night {
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+}
+#night img {
+  width: 20px;
+  height: 20px;
+}
+header .container-header #light img {
+  cursor: pointer;
+}
+header .container-header .app-name {
+  color: white;
+  font-size: 40px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+form {
+  width: 350px;
+  margin: 10px auto 0;
+  position: relative;
+}
+form .div {
+  margin: 0 auto;
+  border-radius: 5px;
+  background-color: #181824;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+form .div input {
+  background-color: transparent;
+  border: navajowhite;
+  color: white;
+  width: -webkit-fill-available;
+}
+form button {
+  width: 12px;
+  height: 12px;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 1px solid gray;
+  background-color: transparent;
+}
+form small {
+  color: #de6a6a;
+  margin-left: 12px;
+  margin-top: 5px;
+}
+header ul {
+  width: 350px;
+  margin: 15px auto 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+}
+header ul .active {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  background-color: #25273c;
+  color: gray;
+  padding: 10px;
+  border-radius: 5px;
+  height: 40px;
+  cursor: pointer;
+}
+header ul .active .all {
+  display: flex;
+  gap: 10px;
+  text-transform: capitalize;
+}
+#clear {
+  text-transform: capitalize;
+}
+li.lists {
+  background-color: #25273c;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid gray;
+  color: var(--Very-Light-Grayish-Blue);
+}
+img#del {
+  width: 12px;
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+}
+label {
+  width: 25px;
+  display: flex;
+}
+label input {
+  appearance: none;
+}
+label div {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1px solid gray;
+  position: relative;
+  cursor: pointer;
+}
+label div::after {
+  font-family: "FontAwesome";
+  content: "\f00c";
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: blue;
+  color: white;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 0.3s;
+  cursor: pointer;
+}
+label input:checked + div::after {
+  transform: scale(1) rotate(360deg);
+}
+p.content {
+  color: #ffffffa6;
+}
+#show-active {
+  display: flex !important;
+}
+/* End Header */
+#color-1 {
+  height: 50vh;
+  background-color: #181824;
+}
+#color-2 {
+  height: calc(100vh - 50vh - 25vh);
+  background-color: #202020;
+}
+
+@media (max-width: 350px) {
+  header ul .active {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+    height: auto;
+  }
+  header ul {
+    width: 250px;
+  }
+  form {
+    width: 250px;
+  }
+}
+
+@media (max-width: 767px) {
+  header .container-header {
+    width: 100%;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  header .container-header .app-name {
+    font-size: 26px;
+  }
+}
