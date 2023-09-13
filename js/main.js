@@ -1,3 +1,7 @@
+onerror = () => {
+  return true;
+};
+
 var light = document.getElementById("light"),
   night = document.getElementById("night"),
   form = document.querySelector("form"),
@@ -60,7 +64,7 @@ form.addEventListener("submit", (e) => {
   localStorage.setItem("list", JSON.stringify(myList));
 });
 
-console.log(myList.length);
+// console.log(myList.length);
 
 function lightMood() {
   light.classList.add("d-none");
