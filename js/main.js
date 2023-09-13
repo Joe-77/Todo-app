@@ -20,9 +20,15 @@ night.onclick = nightMood;
 let myList = JSON.parse(localStorage.getItem("list")) || [];
 
 clearItems.onclick = () => {
-  localStorage.removeItem("list");
-  document.querySelector("#ul li").remove();
+  let z = document.querySelectorAll("#ul li");
+  for (let i = 0; i < z.length; i++) {
+    z[i].remove();
+  }
   numberItems.textContent = 0;
+
+  myList = [];
+
+  localStorage.setItem("list", JSON.stringify(myList));
 };
 
 window.onload = () => {
