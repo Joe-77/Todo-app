@@ -12,10 +12,25 @@ var light = document.getElementById("light"),
   clearItems = document.getElementById("clear"),
   colorOne = document.getElementById("color-1"),
   All = document.getElementById("All"),
-  n = 1;
+  n = 0;
 
 light.onclick = lightMood;
 night.onclick = nightMood;
+
+let myList = JSON.parse(localStorage.getItem("list")) || [];
+
+clearItems.onclick = () => {
+  localStorage.removeItem("list");
+  document.querySelector("#ul li").remove();
+  numberItems.textContent = 0;
+};
+
+window.onload = () => {
+  if (localStorage.key("list")) {
+    getDataFromLocalStorage();
+  }
+  document.getElementById("inp-task").focus();
+};
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -24,75 +39,23 @@ form.addEventListener("submit", (e) => {
   } else {
     error.classList.add("d-none");
 
-    let label = document.createElement("label"),
-      input = document.createElement("input"),
-      div = document.createElement("div"),
-      li = document.createElement("li"),
-      liImg = document.createElement("img"),
-      content = document.createElement("p");
+    n = n + 1;
+    // myList.push(document.getElementById("inp-task").value);
 
-    li.classList.add("lists");
-    li.setAttribute("id", "Lists");
-    input.setAttribute("type", "checkbox");
-    input.setAttribute("id", "done");
-    liImg.src = "img/icon-cross.svg";
-    liImg.setAttribute("id", "del");
-    content.classList.add("content");
-    content.innerHTML = taskAdd.value;
-    All.before(li);
-    label.appendChild(input);
-    label.appendChild(div);
-    li.prepend(label);
-    li.appendChild(liImg);
-    liImg.before(content);
-    ul.prepend(li);
-    taskAdd.value = "";
-    numberItems.innerHTML = n++;
-
-    let done = document.getElementById("done"),
-      Lists = document.getElementById("Lists"),
-      Del = document.getElementById("del");
-
-    done.addEventListener("change", () => {
-      if (done.checked) {
-        Lists.style.textDecoration = "line-through";
-        Lists.setAttribute("id", "show-active");
-      } else {
-        Lists.style.textDecoration = "none";
-        Lists.removeAttribute("id", "show-active");
-      }
-    });
-    Del.addEventListener("click", function () {
-      Lists.style.display = "none";
-      Lists.removeAttribute("id", "show-active");
-      if (n > 0) {
-        n--;
-        numberItems.innerHTML = n - 1;
-      }
+    myList.push({
+      title: document.getElementById("inp-task").value,
+      id: new Date().getTime(),
+      completed: false,
     });
 
-    clearItems.addEventListener("click", () => {
-      Lists.style.display = "none";
-      Lists.removeAttribute("id", "show-active");
-      n = 1;
-      numberItems.innerHTML = 0;
-    });
-
-    allItems.addEventListener("click", () => {
-      Lists.removeAttribute("id", "show-active");
-      Lists.style.display = "flex";
-    });
-
-    completeItems.addEventListener("click", () => {
-      Lists.style.display = "none";
-      numberItems.innerHTML = n - 1;
-    });
-    // allItems.addEventListener("click", () => {
-    //   Lists.removeAttribute("id", "show-active");
-    //   Lists.style.display = "flex";
-    // });
+    document.getElementById("inp-task").value = "";
+    location.reload();
   }
+  localStorage.setItem("list", JSON.stringify(myList));
 });
+
+console.log(myList.length);
+
 function lightMood() {
   light.classList.add("d-none");
   night.classList.remove("d-none");
@@ -105,8 +68,62 @@ function nightMood() {
   colorOne.style.backgroundColor = "#181824";
 }
 
-// function itemsAll() {
-//   Lists.removeAttribute("id", "show-active");
-//   Lists.style.display = "flex";
-//   numberItems.innerHTML = n - 1;
-// }
+// ******************************************************
+
+function getDataFromLocalStorage() {
+  myList.forEach((e) => {
+    let label = document.createElement("li"),
+      check = document.createElement("div"),
+      div = document.createElement("div"),
+      complete = document.createElement("div"),
+      span = document.createElement("span"),
+      title = document.createElement("h4"),
+      del = document.createElement("i");
+
+    del.className = "fa-solid fa-xmark delete";
+    check.className = "doneList";
+    span.className = "check";
+
+    complete.className = "fa-solid fa-check done";
+
+    div.style.position = "relative";
+
+    div.append(complete, span);
+
+    title.innerHTML = e.title;
+
+    check.append(div, title);
+
+    label.append(check, del);
+
+    ul.prepend(label);
+
+    del.onclick = () => {
+      deleteDataFromLocalStorage(e.id);
+
+      label.remove();
+    };
+
+    span.onclick = function () {
+      complete.classList.toggle("block");
+
+      if (complete.classList.contains("block")) {
+        completedTasks(e.id, complete);
+      }
+    };
+  });
+}
+
+// ******************************************************
+
+document.getElementById("number").innerHTML = myList.length;
+
+function deleteDataFromLocalStorage(id) {
+  myList = myList.filter((e) => e.id !== id);
+
+  localStorage.setItem("list", JSON.stringify(myList));
+
+  document.getElementById("number").innerHTML = myList.length;
+}
+
+// localStorage.clear();
